@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    image: mariadb
+    restart: on-failure
+    env_file: .env
+    networks:
+      - inceptionNetwork
+
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    image: nginx
+    restart: on-failure
+    ports:
+      - "443:443"
+    networks:
+      - inceptionNetwork
+
+
+networks: #se utiliza para definir redes personalizadas
+  inceptionNetwork:
+    name: inceptionNetwork
+    driver: bridge #controlador de red predeterminado de Docker
